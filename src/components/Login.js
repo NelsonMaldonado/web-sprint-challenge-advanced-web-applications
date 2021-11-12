@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
-import styled from "styled-components"
 
 const Login = (props) => {
   const [user, setUser] = useState(initialState)
@@ -36,7 +35,7 @@ const Login = (props) => {
       <ModalContainer>
         <h1>Welcome to Blogger Pro</h1>
         <h2>Please enter your account information.</h2>
-        <FormGroup onSubmit={Login}>
+        <FormGroup onSubmit={login}>
           <Label>
             Username:
             <Input
