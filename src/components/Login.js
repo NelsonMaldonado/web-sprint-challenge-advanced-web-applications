@@ -1,17 +1,69 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react"
+import styled from "styled-components"
+import axios from "axios"
+import styled from "styled-components"
 
-const Login = () => {
-    
-    return(<ComponentContainer>
-        <ModalContainer>
-            <h1>Welcome to Blogger Pro</h1>
-            <h2>Please enter your account information.</h2>
-        </ModalContainer>
-    </ComponentContainer>);
+const Login = (props) => {
+  const [user, setUser] = useState(initialState)
+  const [error, setError] = useState()
+
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    })
+  }
+  const login = (e) => {
+    e.preventDefault()
+
+    if (setUser.username !== "Lambda" || setUser.password !== "School") {
+      setError("Username or Password is not valid")
+    }
+    axios
+      .post("http://localhost:5000/api/login", user)
+      .then((res) => {
+        console.log(res.data)
+        localStorage.setItem("token", res.data.token)
+        props.history.push("view", user)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  return (
+    <ComponentContainer>
+      <ModalContainer>
+        <h1>Welcome to Blogger Pro</h1>
+        <h2>Please enter your account information.</h2>
+        <FormGroup onSubmit={Login}>
+          <Label>
+            Username:
+            <Input
+              type="text"
+              name="username"
+              id="username"
+              onChange={handleChange}
+            />
+          </Label>
+          <Label>
+            <Input
+              type="password"
+              name="password"
+              placeholder="type password"
+              id="password"
+              onChange={handleChange}
+            />
+          </Label>
+          <Button id="submit">Log in</Button>
+        </FormGroup>
+        <p id="error">{error}</p>
+      </ModalContainer>
+    </ComponentContainer>
+  )
 }
 
-export default Login;
+export default Login
 
 //Task List
 //1. Build login form DOM from scratch, making use of styled components if needed. Make sure the username input has id="username" and the password input as id="password".
@@ -22,36 +74,36 @@ export default Login;
 //6. MAKE SURE TO ADD id="username", id="password", id="error" AND id="submit" TO THE APPROPRIATE DOM ELEMENTS. YOUR AUTOTESTS WILL FAIL WITHOUT THEM.
 
 const ComponentContainer = styled.div`
-    height: 70%;
-    justify-content: center;
-    align-items: center;
-    display:flex;
+  height: 70%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `
 
 const ModalContainer = styled.div`
-    width: 500px;
-    background: white;
-    padding: 2rem;
-    text-align: center;
+  width: 500px;
+  background: white;
+  padding: 2rem;
+  text-align: center;
 `
 
 const Label = styled.label`
-    display: block;
-    text-align: left;
-    font-size: 1.5rem;
+  display: block;
+  text-align: left;
+  font-size: 1.5rem;
 `
 
 const FormGroup = styled.form`
-    padding:1rem;
+  padding: 1rem;
 `
 
 const Input = styled.input`
-    font-size: 1rem;
-    padding: 1rem 0;
-    width:100%;
+  font-size: 1rem;
+  padding: 1rem 0;
+  width: 100%;
 `
 
 const Button = styled.button`
-    padding:1rem;
-    width: 100%;
+  padding: 1rem;
+  width: 100%;
 `
