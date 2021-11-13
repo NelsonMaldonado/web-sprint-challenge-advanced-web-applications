@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import axios from "axios"
 
+const initialState = {
+  username: "",
+  password: "",
+}
+
 const Login = (props) => {
   const [user, setUser] = useState(initialState)
   const [error, setError] = useState()
