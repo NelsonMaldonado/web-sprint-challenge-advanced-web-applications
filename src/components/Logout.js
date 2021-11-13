@@ -13,7 +13,7 @@ const Logout = () => {
       })
   }, [])
 
-  return <div></div>
+  return <div>You have logged out, please log back in</div>
 }
 
 export default Logout
